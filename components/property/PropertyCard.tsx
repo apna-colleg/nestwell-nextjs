@@ -6,8 +6,8 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-import type { Property } from "@/types";
 import { urlFor } from "@/sanity/lib/image";
+import { Property } from "@/types";
 
 interface PropertyCardProps {
   property: Property;

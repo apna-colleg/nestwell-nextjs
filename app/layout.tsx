@@ -1,7 +1,7 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata, Viewport } from "next";
 import { Geist_Mono, Inter, Plus_Jakarta_Sans } from "next/font/google";
-
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 import { SanityLive } from "@/sanity/lib/live";
 
@@ -81,54 +81,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nestwell.com";
-
-  const organizationSchema = {
-    "@context": "https://schema.org",
-    "@type": "RealEstateAgent",
-    name: "Nestwell",
-    url: baseUrl,
-    logo: `${baseUrl}/logo.png`,
-    description:
-      "Nestwell is a trusted real estate platform helping you find your perfect home. Browse thousands of properties, connect with experienced real estate agents, and make your property dreams come true.",
-    address: {
-      "@type": "PostalAddress",
-      addressCountry: "US",
-    },
-    contactPoint: {
-      "@type": "ContactPoint",
-      contactType: "Customer Service",
-      availableLanguage: "English",
-    },
-    sameAs: [
-      // Add your social media profiles here when available
-      // "https://www.facebook.com/nestwell",
-      // "https://www.twitter.com/nestwell",
-      // "https://www.linkedin.com/company/nestwell",
-      // "https://www.instagram.com/nestwell",
-    ],
-  };
-
-  const websiteSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "Nestwell",
-    url: baseUrl,
-    description:
-      "Find your perfect home with Nestwell. Browse real estate listings, connect with agents, and discover properties for sale and rent.",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${baseUrl}/search?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
-  };
-
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <head>
           {/* Preconnect to external domains for performance */}
           <link rel="preconnect" href="https://cdn.sanity.io" />
@@ -142,7 +97,12 @@ export default function RootLayout({
         <body
           className={`${inter.variable} ${plusJakarta.variable} ${geistMono.variable} font-body antialiased`}
         >
+          {/* Skip link for accessibility */}
+          <a href="#main" className="skip-link">
+            Skip to main content
+          </a>
           {children}
+          <Toaster />
           <SanityLive />
         </body>
       </html>
